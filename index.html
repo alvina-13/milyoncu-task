@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <title>Milyonçu</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div id="startPage" class="start-page">
+        <h1 class="title">Milyonçu</h1>
+        <button id="startBtn">Başla</button>
+    </div>
+
+    <div id="gamePage" class="h1Page" style="display:none;">
+        <div class="mainPage">
+            <p id="question">Suallar burda olacaq</p>
+            <button id="backToStartBtn" class="back-button">Geri</button>
+        </div>
+
+        <div class="variants">
+            <button class="variant" id="variantA"></button>
+            <button class="variant" id="variantB"></button>
+            <button class="variant" id="variantC"></button>
+            <button class="variant" id="variantD"></button>
+        </div>
+
+        <div class="help">
+            <button class="fiftyFifty">50/50</button>
+        </div>
+
+        <div class="endPage">
+            <p id="score">Xal: 0</p>
+            <p id="timer"><i class="fa-regular fa-hourglass"></i>Zaman: 30</p>
+            <div class="restart">
+                <button id="restartBtn" style="display:none;">Yenidən Başla</button>
+            </div>
+        </div>
+
+        <div id="result" class="result"></div>
+    </div>
+
+    <!-- SOUNDS -->
+    <audio id="correctSound" src="correct-83487 (1).mp3"></audio>
+    <audio id="wrongSound" src="incorrect-293358.mp3"></audio>
+    <audio id="backgroundMusic" src="bgmusic.mp3" loop></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
