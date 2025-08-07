@@ -199,3 +199,60 @@ body {
 .audio-toggle:hover {
     background-color: rgba(255, 255, 255, 0.2);
 }
+.win-page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, #8b0000, #000000);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    flex-direction: column;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.win-content {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid gold;
+    padding: 30px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 25px gold;
+}
+
+.win-content h1 {
+    font-size: 2em;
+    margin-bottom: 15px;
+    color: gold;
+    text-shadow: 0 0 10px white;
+}
+.glow{
+    font-size: 24px;
+    color: gold;
+    text-align: center;
+}
+
+#restartBtnFinal {
+    padding: 10px 20px;
+    font-size: 18px;
+    margin-top: 20px;
+    background: gold;
+    border: none;
+    color: black;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#restartBtnFinal:hover {
+    background: #ffcc00;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

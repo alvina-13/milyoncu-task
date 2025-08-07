@@ -75,6 +75,7 @@ const questions = [
         answer: 1
     },
 ];
+
 let currentQuestion = 0;
 let score = 0;
 let fiftyUsed = false;
@@ -96,6 +97,10 @@ const backgroundMusic = document.getElementById("backgroundMusic");
 const fiftyBtn = document.querySelector(".fiftyFifty");
 const restartBtn = document.getElementById("restartBtn");
 const timerEl = document.getElementById("timer");
+
+const winScreen = document.getElementById("winPage");
+const finalScore = document.getElementById("finalScore");
+const restartBtnFinal = document.getElementById("restartBtnFinal");
 
 const startPage = document.getElementById("startPage");
 const startBtn = document.getElementById("startBtn");
@@ -139,13 +144,30 @@ function handleTimeout() {
 
 function loadQuestion() {
     if (currentQuestion >= questions.length) {
-        resultEl.textContent = `Təbriklər! Siz Milyonçu oldunuz! Xal: ${score}`;
+        questionEl.style.display = "none";
         optionBtns.forEach(btn => btn.style.display = "none");
-        restartBtn.style.display = "inline-block";
+        fiftyBtn.style.display = "none";
+        timerEl.style.display = "none";
+        resultEl.style.display = "none";
+
         clearInterval(timer);
+        backgroundMusic.pause();
+        const winSound = document.getElementById("winSound");
+        winSound.play();
+
+        resultEl.innerHTML = `
+    <div class="glow">
+        <i class="fa-solid fa-champagne-glasses"></i> 
+        <strong>Təbriklər!</strong> 
+        <i class="fa-solid fa-sack-dollar"></i><br>
+        Siz <i class="fa-solid fa-trophy"></i> Milyonçu <i class="fa-solid fa-trophy"></i> oldunuz!<br>
+        Toplam Xal: ${score}
+        <br><i class="fa-solid fa-music"></i>
+    </div>
+`;
+        winPage.style.display = "flex";
         return;
     }
-
     const q = questions[currentQuestion];
     questionEl.textContent = q.question;
 
@@ -173,7 +195,7 @@ function handleAnswer(index) {
             score += getPoints(currentQuestion);
             scoreEl.textContent = `Xal: ${score}`;
             currentQuestion++;
-            setTimeout(loadQuestion, 2000); 
+            setTimeout(loadQuestion, 2000);
         } else {
             optionBtns[index].classList.add("incorrect");
             optionBtns[q.answer].classList.add("correct");
@@ -181,7 +203,7 @@ function handleAnswer(index) {
             resultEl.textContent = `Uduzdunuz! Xal: ${score}`;
             restartBtn.style.display = "inline-block";
         }
-    }, 3000); 
+    }, 3000);
 }
 
 optionBtns.forEach((btn, i) => {
@@ -214,6 +236,29 @@ restartBtn.addEventListener("click", () => {
         btn.disabled = false;
     });
 
+    backgroundMusic.currentTime = 0;
+    backgroundMusic.play();
+    loadQuestion();
+});
+
+restartBtnFinal.addEventListener("click", () => {
+    winPage.style.display = "none";
+    gamePage.style.display = "block";
+    currentQuestion = 0;
+    score = 0;
+    fiftyUsed = false;
+    scoreEl.textContent = "Xal: 0";
+    resultEl.textContent = "";
+    restartBtn.style.display = "none";
+
+    optionBtns.forEach(btn => {
+        btn.style.display = "inline-block";
+        btn.classList.remove("correct", "incorrect");
+        btn.disabled = false;
+    });
+
+    backgroundMusic.currentTime = 0;
+    backgroundMusic.play();
     loadQuestion();
 });
 
@@ -231,13 +276,16 @@ const audioToggle = document.getElementById("audioToggle");
 const audioIcon = document.getElementById("audioIcon");
 let isMuted = false;
 
+const winSound = document.getElementById("winSound");
 audioToggle.addEventListener("click", () => {
     if (isMuted) {
         backgroundMusic.muted = false;
+        winSound.muted = false;
         audioIcon.classList.remove("fa-volume-mute");
         audioIcon.classList.add("fa-volume-up");
     } else {
         backgroundMusic.muted = true;
+        winSound.muted = true;
         audioIcon.classList.remove("fa-volume-up");
         audioIcon.classList.add("fa-volume-mute");
     }
