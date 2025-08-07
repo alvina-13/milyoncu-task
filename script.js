@@ -75,7 +75,6 @@ const questions = [
         answer: 1
     },
 ];
-
 let currentQuestion = 0;
 let score = 0;
 let fiftyUsed = false;
@@ -101,7 +100,6 @@ const timerEl = document.getElementById("timer");
 const startPage = document.getElementById("startPage");
 const startBtn = document.getElementById("startBtn");
 const gamePage = document.getElementById("gamePage");
-
 
 startBtn.addEventListener("click", () => {
     startPage.style.display = "none";
@@ -139,7 +137,6 @@ function handleTimeout() {
     restartBtn.style.display = "inline-block";
 }
 
-
 function loadQuestion() {
     if (currentQuestion >= questions.length) {
         resultEl.textContent = `Təbriklər! Siz Milyonçu oldunuz! Xal: ${score}`;
@@ -169,26 +166,22 @@ function handleAnswer(index) {
     const q = questions[currentQuestion];
     const isCorrect = index === q.answer;
 
-    if (isCorrect) {
-        optionBtns[index].classList.add("correct");
-    } else {
-        optionBtns[index].classList.add("incorrect");
-        optionBtns[q.answer].classList.add("correct");
-    }
-
     setTimeout(() => {
         if (isCorrect) {
+            optionBtns[index].classList.add("correct");
             correctSound.play();
             score += getPoints(currentQuestion);
             scoreEl.textContent = `Xal: ${score}`;
             currentQuestion++;
-            loadQuestion();
+            setTimeout(loadQuestion, 2000); 
         } else {
+            optionBtns[index].classList.add("incorrect");
+            optionBtns[q.answer].classList.add("correct");
             wrongSound.play();
             resultEl.textContent = `Uduzdunuz! Xal: ${score}`;
             restartBtn.style.display = "inline-block";
         }
-    }, 3000);
+    }, 3000); 
 }
 
 optionBtns.forEach((btn, i) => {
@@ -223,12 +216,30 @@ restartBtn.addEventListener("click", () => {
 
     loadQuestion();
 });
+
 const backToStartBtn = document.getElementById("backToStartBtn");
 
 backToStartBtn.addEventListener("click", () => {
-    clearInterval(timer); 
-    backgroundMusic.pause(); 
+    clearInterval(timer);
+    backgroundMusic.pause();
     backgroundMusic.currentTime = 0;
     gamePage.style.display = "none";
-    startPage.style.display = "flex"; 
+    startPage.style.display = "flex";
+});
+
+const audioToggle = document.getElementById("audioToggle");
+const audioIcon = document.getElementById("audioIcon");
+let isMuted = false;
+
+audioToggle.addEventListener("click", () => {
+    if (isMuted) {
+        backgroundMusic.muted = false;
+        audioIcon.classList.remove("fa-volume-mute");
+        audioIcon.classList.add("fa-volume-up");
+    } else {
+        backgroundMusic.muted = true;
+        audioIcon.classList.remove("fa-volume-up");
+        audioIcon.classList.add("fa-volume-mute");
+    }
+    isMuted = !isMuted;
 });
